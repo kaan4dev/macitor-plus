@@ -1,0 +1,4 @@
+psutil
+pywebview
+pyobjc-core
+pyobjc-framework-Cocoa

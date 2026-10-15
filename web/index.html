@@ -1,0 +1,374 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>MaciTor+</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="brand-dot"></span>
+        <span class="brand-name">MaciTor<span class="plus">+</span></span>
+      </div>
+      <nav class="nav">
+        <button class="nav-item active" data-tab="overview">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="9" rx="2"/><rect x="14" y="3" width="7" height="5" rx="2"/><rect x="14" y="12" width="7" height="9" rx="2"/><rect x="3" y="16" width="7" height="5" rx="2"/></svg>
+          <span>Overview</span>
+        </button>
+        <button class="nav-item" data-tab="processes">
+          <svg viewBox="0 0 24 24"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="14" y2="17"/></svg>
+          <span>Processes</span>
+        </button>
+        <button class="nav-item" data-tab="apps">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="4"/><path d="M8 12h8M12 8v8"/></svg>
+          <span>Apps</span>
+        </button>
+        <button class="nav-item" data-tab="cleaning">
+          <svg viewBox="0 0 24 24"><path d="M12 2l1.8 4.6L18 8l-4.2 1.4L12 14l-1.8-4.6L6 8l4.2-1.4L12 2z"/><path d="M19 14l.9 2.2L22 17l-2.1.8L19 20l-.9-2.2L16 17l2.1-.8L19 14z"/></svg>
+          <span>Cleanup</span>
+        </button>
+        <button class="nav-item" data-tab="system">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.6a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+          <span>System</span>
+        </button>
+        <button class="nav-item" data-tab="files">
+          <svg viewBox="0 0 24 24"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7z"/></svg>
+          <span>Files</span>
+        </button>
+      </nav>
+      <div class="sidebar-footer">
+        <span class="live-dot"></span>
+        <span>Live</span>
+      </div>
+    </aside>
+
+    <main class="content">
+      <!-- Overview -->
+      <section class="tab active" id="tab-overview">
+        <h1>Overview</h1>
+
+        <div class="glass-card diagnosis-card">
+          <div class="diagnosis-head">
+            <span class="tile-label">Why is my Mac slow?</span>
+            <div class="btn-row">
+              <button class="btn btn-ghost btn-sm" id="meeting-mode-btn">Meeting Mode</button>
+              <button class="btn btn-accent btn-sm" id="diagnose-btn">Diagnose Now</button>
+            </div>
+          </div>
+          <div id="diagnosis-results"></div>
+        </div>
+
+        <div class="tiles">
+          <div class="tile" id="tile-cpu">
+            <div class="tile-head">
+              <span class="tile-label">CPU</span>
+              <span class="tile-value" id="cpu-value">—</span>
+            </div>
+            <span class="tile-caption" id="cpu-caption">&nbsp;</span>
+            <div class="spark-wrap"><canvas id="chart-cpu"></canvas></div>
+          </div>
+          <div class="tile" id="tile-ram">
+            <div class="tile-head">
+              <span class="tile-label">Memory</span>
+              <span class="tile-value" id="ram-value">—</span>
+            </div>
+            <span class="tile-caption" id="ram-caption">&nbsp;</span>
+            <div class="spark-wrap"><canvas id="chart-ram"></canvas></div>
+          </div>
+          <div class="tile" id="tile-disk">
+            <div class="tile-head">
+              <span class="tile-label">Disk (/)</span>
+              <span class="tile-value" id="disk-value">—</span>
+            </div>
+            <span class="tile-caption" id="disk-caption">&nbsp;</span>
+            <div class="spark-wrap"><canvas id="chart-disk"></canvas></div>
+          </div>
+        </div>
+
+        <div class="tiles tiles-secondary">
+          <div class="tile tile-wide" id="tile-network">
+            <div class="tile-head">
+              <span class="tile-label">Network</span>
+            </div>
+            <div class="net-row">
+              <div class="net-metric">
+                <svg viewBox="0 0 24 24" class="net-icon down"><path d="M12 4v13M6 11l6 6 6-6"/></svg>
+                <span id="net-down">0 KB/s</span>
+              </div>
+              <div class="net-metric">
+                <svg viewBox="0 0 24 24" class="net-icon up"><path d="M12 20V7M6 13l6-6 6 6"/></svg>
+                <span id="net-up">0 KB/s</span>
+              </div>
+            </div>
+            <span class="tile-caption" id="net-caption">&nbsp;</span>
+            <div class="spark-wrap"><canvas id="chart-net"></canvas></div>
+          </div>
+          <div class="tile tile-wide" id="tile-diskio">
+            <div class="tile-head">
+              <span class="tile-label">Disk I/O</span>
+            </div>
+            <div class="net-row">
+              <div class="net-metric">
+                <svg viewBox="0 0 24 24" class="net-icon down"><path d="M12 4v13M6 11l6 6 6-6"/></svg>
+                <span id="io-read">0 KB/s</span>
+              </div>
+              <div class="net-metric">
+                <svg viewBox="0 0 24 24" class="net-icon up"><path d="M12 20V7M6 13l6-6 6 6"/></svg>
+                <span id="io-write">0 KB/s</span>
+              </div>
+            </div>
+            <span class="tile-caption">&nbsp;</span>
+            <div class="spark-wrap"><canvas id="chart-io"></canvas></div>
+          </div>
+          <div class="tile tile-wide" id="tile-battery">
+            <div class="tile-head">
+              <span class="tile-label">Battery</span>
+              <span class="tile-value" id="battery-value">—</span>
+            </div>
+            <span class="tile-caption" id="battery-caption">&nbsp;</span>
+            <div class="battery-bar-wrap"><div class="battery-bar" id="battery-bar"></div></div>
+            <span class="tile-caption" id="battery-health">&nbsp;</span>
+          </div>
+          <div class="tile tile-wide" id="tile-top">
+            <div class="tile-head">
+              <span class="tile-label">Top Consumers</span>
+            </div>
+            <div class="top-row">
+              <span class="top-tag cpu">CPU</span>
+              <span class="top-name" id="top-cpu-name">—</span>
+              <span class="top-val" id="top-cpu-val">—</span>
+            </div>
+            <div class="top-row">
+              <span class="top-tag ram">RAM</span>
+              <span class="top-name" id="top-ram-name">—</span>
+              <span class="top-val" id="top-ram-val">—</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card cores-card">
+          <span class="tile-label">Cores</span>
+          <div class="cores-grid" id="cores-grid"></div>
+        </div>
+
+        <div class="glass-card info-card">
+          <div class="info-row" id="swap-row">
+            <span class="info-dot"></span>
+            <span>Swap usage: <strong id="swap-text">—</strong></span>
+          </div>
+          <div class="info-row" id="uptime-row">
+            <span class="info-dot"></span>
+            <span>Uptime: <strong id="uptime-text">—</strong></span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Processes -->
+      <section class="tab" id="tab-processes">
+        <h1>Processes</h1>
+        <input class="search-input" id="proc-search" type="text" placeholder="Search by name…" />
+        <div class="glass-card list-card">
+          <div class="list-header proc-grid">
+            <span>PID</span><span>Name</span><span>CPU %</span><span>RAM %</span><span></span>
+          </div>
+          <div class="list-body" id="proc-list"></div>
+        </div>
+      </section>
+
+      <!-- Apps / Uninstaller -->
+      <section class="tab" id="tab-apps">
+        <h1>Apps</h1>
+        <p class="subtitle">When you remove an app, I'll find related cache/preference/log files too; everything moves to Trash, nothing is deleted permanently.</p>
+        <input class="search-input" id="apps-search" type="text" placeholder="Search apps…" />
+        <div id="apps-list"></div>
+      </section>
+
+      <!-- Cleaning -->
+      <section class="tab" id="tab-cleaning">
+        <h1>Cleanup</h1>
+
+        <div class="glass-card deep-clean-card">
+          <div class="deep-clean-text">
+            <span class="tile-label">Deep Clean</span>
+            <span class="subtitle" style="margin:4px 0 0">Caches + brew + podman + DNS, all in one pass.</span>
+          </div>
+          <button class="btn btn-accent" id="deep-clean-btn">Start Deep Clean</button>
+        </div>
+        <p class="status-line" id="deep-clean-status">&nbsp;</p>
+
+        <h2 class="section-title">Disk Breakdown</h2>
+        <div class="glass-card info-card">
+          <div class="disk-breakdown-bar" id="disk-breakdown-bar"></div>
+          <div id="disk-breakdown-legend"></div>
+        </div>
+
+        <h2 class="section-title">Caches</h2>
+        <p class="subtitle">Sizes are calculated; the item you confirm gets cleared.</p>
+        <div id="clean-list"></div>
+        <p class="status-line" id="clean-status">Ready.</p>
+
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="btn-row">
+          <button class="btn btn-ghost" data-extra="brew">brew cleanup</button>
+          <button class="btn btn-ghost" data-extra="podman_prune">podman system prune</button>
+          <button class="btn btn-ghost" data-quick="restart_finder">Restart Finder</button>
+          <button class="btn btn-ghost" data-quick="restart_dock">Restart Dock</button>
+          <button class="btn btn-ghost" data-quick="flush_dns">Flush DNS Cache</button>
+          <button class="btn btn-ghost" id="caffeinate-toggle" data-active="false">Prevent Sleep: Off</button>
+          <button class="btn btn-danger" data-quick="restart_mac">Restart</button>
+          <button class="btn btn-ghost" data-quick="sleep_mac">Sleep</button>
+        </div>
+
+        <h2 class="section-title">Largest Folders</h2>
+        <div id="big-folders-list"></div>
+      </section>
+
+      <!-- System -->
+      <section class="tab" id="tab-system">
+        <h1>System</h1>
+
+        <div class="tiles tiles-secondary">
+          <div class="glass-card info-card" id="sysinfo-card">
+            <span class="tile-label">Device</span>
+            <div class="info-row"><span>Model:</span>&nbsp;<strong id="sys-model">—</strong></div>
+            <div class="info-row"><span>Chip:</span>&nbsp;<strong id="sys-chip">—</strong></div>
+            <div class="info-row"><span>Memory:</span>&nbsp;<strong id="sys-memory">—</strong></div>
+            <div class="info-row"><span>macOS:</span>&nbsp;<strong id="sys-os">—</strong></div>
+            <div class="info-row"><span>Serial:</span>&nbsp;<strong id="sys-serial">—</strong></div>
+          </div>
+
+          <div class="glass-card info-card" id="security-card">
+            <span class="tile-label">Security</span>
+            <div class="info-row"><span class="status-dot" id="dot-filevault"></span><span>FileVault (disk encryption)</span></div>
+            <div class="info-row"><span class="status-dot" id="dot-gatekeeper"></span><span>Gatekeeper</span></div>
+            <div class="info-row"><span class="status-dot" id="dot-firewall"></span><span>Firewall</span></div>
+          </div>
+        </div>
+
+        <div class="tiles tiles-secondary">
+          <div class="glass-card info-card" id="wifi-card">
+            <span class="tile-label">Network Connection</span>
+            <div class="info-row"><span>Wi-Fi:</span>&nbsp;<strong id="sys-ssid">—</strong></div>
+            <div class="info-row"><span>IP Address:</span>&nbsp;<strong id="sys-ip">—</strong></div>
+          </div>
+
+          <div class="glass-card info-card">
+            <span class="tile-label">MaciTor+ Startup</span>
+            <div class="info-row">
+              <span>Launch automatically at login</span>
+              <label class="switch">
+                <input type="checkbox" id="self-login-toggle">
+                <span class="switch-track"></span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="tiles tiles-secondary">
+          <div class="glass-card info-card" id="vpn-card">
+            <span class="tile-label">VPN &amp; Avast</span>
+            <div class="info-row"><span class="status-dot" id="dot-vpn"></span><span>Active VPN tunnel</span></div>
+            <div class="info-row"><span class="status-dot" id="dot-avast"></span><span>Avast running</span></div>
+            <p class="status-line" id="vpn-note">&nbsp;</p>
+          </div>
+
+          <div class="glass-card info-card" id="backup-card">
+            <span class="tile-label">Time Machine</span>
+            <div class="info-row"><span>Status:</span>&nbsp;<strong id="backup-status">—</strong></div>
+            <div class="info-row"><span>Latest backup:</span>&nbsp;<strong id="backup-latest">—</strong></div>
+          </div>
+        </div>
+
+        <h2 class="section-title">Login Items</h2>
+        <div id="login-items-list"></div>
+
+        <h2 class="section-title">
+          macOS Software Update
+          <button class="btn btn-ghost btn-sm" id="swupdate-refresh">Check</button>
+        </h2>
+        <p class="status-line" id="swupdate-status">Press the button to check (requires internet, may take a moment).</p>
+        <div id="swupdate-list"></div>
+
+        <h2 class="section-title">
+          Homebrew Updates
+          <button class="btn btn-ghost btn-sm" id="brew-refresh">Check</button>
+          <button class="btn btn-accent btn-sm" id="brew-upgrade-all" style="display:none">Update All</button>
+        </h2>
+        <p class="status-line" id="brew-status">Press the button to check (requires internet, may take a moment).</p>
+        <div id="brew-list"></div>
+
+        <h2 class="section-title">Podman</h2>
+        <div class="glass-card podman-head">
+          <div class="podman-status">
+            <span class="status-dot" id="podman-dot"></span>
+            <span id="podman-status-text">Machine: —</span>
+          </div>
+          <div class="btn-row">
+            <button class="btn btn-ghost btn-sm" id="podman-refresh">Refresh</button>
+            <button class="btn btn-accent btn-sm" id="podman-start">Start</button>
+            <button class="btn btn-danger btn-sm" id="podman-stop">Stop</button>
+          </div>
+        </div>
+        <div class="glass-card list-card list-card-compact">
+          <div class="list-body" id="podman-list"></div>
+        </div>
+      </section>
+
+      <!-- Files -->
+      <section class="tab" id="tab-files">
+        <h1>Files</h1>
+
+        <h2 class="section-title">
+          Screenshots
+          <button class="btn btn-ghost btn-sm" id="screenshots-refresh">Scan</button>
+        </h2>
+        <p class="status-line" id="screenshots-status">&nbsp;</p>
+        <div id="screenshots-list"></div>
+
+        <h2 class="section-title">
+          Duplicate Files
+          <button class="btn btn-ghost btn-sm" id="duplicates-refresh">Scan</button>
+        </h2>
+        <p class="subtitle">Scans Desktop, Downloads, Documents — skips project folders (node_modules, venv, etc).</p>
+        <p class="status-line" id="duplicates-status">&nbsp;</p>
+        <div id="duplicates-list"></div>
+
+        <h2 class="section-title">Mail &amp; Messages Attachments</h2>
+        <div id="attachments-list"></div>
+
+        <h2 class="section-title">Browser Caches</h2>
+        <div id="browser-cache-list"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="modal-overlay" id="uninstall-modal">
+    <div class="modal glass-card">
+      <h2 id="modal-title">Remove App</h2>
+      <p class="subtitle" id="modal-sub">Found files are listed below — everything will move to Trash.</p>
+      <div id="modal-leftovers"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="modal-cancel">Cancel</button>
+        <button class="btn btn-danger" id="modal-confirm">Move to Trash</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="meeting-modal">
+    <div class="modal glass-card">
+      <h2 id="meeting-modal-title">Meeting Mode</h2>
+      <p class="subtitle" id="meeting-modal-sub">Quit these background sync apps and free up memory before you share your screen. Teams/Zoom/communication apps are never touched.</p>
+      <div id="meeting-modal-items"></div>
+      <div class="modal-actions">
+        <button class="btn btn-ghost" id="meeting-modal-cancel">Cancel</button>
+        <button class="btn btn-accent" id="meeting-modal-confirm">Free Up Memory</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="vendor/chart.umd.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

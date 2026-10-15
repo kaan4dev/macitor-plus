@@ -769,12 +769,18 @@ document.getElementById("proc-search").addEventListener("input", (e) => {
 
 // ---------------- Boot ----------------
 function boot() {
+  // Staggered on purpose: firing every refresh (each spawning a Python thread,
+  // some of which shell out to subprocesses like system_profiler/du) in the same
+  // tick right at launch can starve the main run loop long enough that macOS
+  // never finishes laying out the menu bar status item (it ends up permanently
+  // zero-sized/invisible). Spreading the initial burst out avoids the race.
   refreshOverview();
-  refreshNetwork();
-  refreshDiskIo();
-  refreshBattery();
-  refreshCores();
-  refreshTopConsumers();
+  setTimeout(refreshNetwork, 150);
+  setTimeout(refreshDiskIo, 300);
+  setTimeout(refreshCores, 450);
+  setTimeout(refreshTopConsumers, 600);
+  setTimeout(refreshBattery, 900);
+
   setInterval(refreshOverview, 2500);
   setInterval(refreshNetwork, 2500);
   setInterval(refreshDiskIo, 2500);

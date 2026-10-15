@@ -928,4 +928,9 @@ if __name__ == "__main__":
         transparent=True,
         vibrancy=True,
     )
+
+    # Closing the window hides it instead of quitting — the app keeps running
+    # (reopen from the Dock icon). Cmd+Q / right-click Dock icon > Quit still exits.
+    window.events.closing += lambda: window.hide() or False
+
     webview.start()
